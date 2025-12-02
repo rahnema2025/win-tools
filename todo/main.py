@@ -90,8 +90,8 @@ def main():
     args = parser.parse_args()
     
     # Initialize managers
-    todo_list = TodoList(args.todo_file) if hasattr(args, 'todo_file') else TodoList()
-    pattern_manager = PatternManager(args.pattern_file) if hasattr(args, 'pattern_file') else PatternManager()
+    todo_list = TodoList(args.todo_file) if args.todo_file else TodoList()
+    pattern_manager = PatternManager(args.pattern_file) if args.pattern_file else PatternManager()
     
     if args.command == 'add':
         # Expand patterns in the text

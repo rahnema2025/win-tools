@@ -96,13 +96,10 @@ class TestPatternManager:
         assert expanded == 'جلسه تیم توسعه'
 
     def test_multiple_pattern_expansion(self, pattern_manager):
-        """Test that only the first matching pattern is expanded."""
+        """Test that longer patterns are matched first."""
         pattern_manager.add_pattern('mt', 'Meeting')
         pattern_manager.add_pattern('mtg', 'Meeting with team')
-        # Should match 'mt' first (shorter prefix)
+        # Should match 'mtg' first (longer prefix gets priority)
         expanded = pattern_manager.expand_text('mtg')
-        # The actual behavior depends on dict order
-        # In Python 3.7+, dicts maintain insertion order
-        # 'mt' is first, so 'mtg' starts with 'mt', expanding to 'Meetingg'
-        # This test documents the current behavior
-        assert expanded in ['Meetingg', 'Meeting with team']
+        # The longer pattern should be matched first
+        assert expanded == 'Meeting with team'

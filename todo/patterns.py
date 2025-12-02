@@ -91,8 +91,12 @@ class PatternManager:
         Returns:
             The expanded text (or original if no pattern matches)
         """
+        # Sort patterns by prefix length in descending order to prioritize longer matches
+        # This ensures 'mtg' is matched before 'mt' when both patterns exist
+        sorted_patterns = sorted(self.patterns.items(), key=lambda x: len(x[0]), reverse=True)
+        
         # Check if text starts with any pattern prefix
-        for prefix, full_text in self.patterns.items():
+        for prefix, full_text in sorted_patterns:
             if text.startswith(prefix):
                 # Replace the prefix with full text
                 remainder = text[len(prefix):]
